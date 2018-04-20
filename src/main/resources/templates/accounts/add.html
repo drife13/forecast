@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container body-content">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" style="max-width:600px;" th:object="${account}">
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}"/>
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+    <div class="form-group">
+        <label th:for="initialAmt">Initial Balance</label>
+        <input class="form-control" th:field="*{initialAmt}" />
+        <span th:errors="*{initialAmt}" class="error"></span>
+    </div>
+    <input type="submit" value="Add Account" />
+</form>
+
+</body>
+</html>

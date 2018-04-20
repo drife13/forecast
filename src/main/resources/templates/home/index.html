@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container body-content">
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+
+<table class="table">
+    <tr>
+        <th>Account Name</th>
+        <th>Starting Balance</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.initialAmt}"></td>
+        <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
+        <td>Remove</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a href="/accounts/add">Add an Account</a></td>
+    </tr>
+</table>
+
+<table class="table">
+    <tr>
+        <th>Payment Description</th>
+        <th>Amount</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Frequency</th>
+        <th>Edit</th>
+        <th>Remove</th>
+    </tr>
+
+    <tr th:each="payment : ${paymentTypes}">
+        <td th:text="${payment.name}"></td>
+        <td th:text="${payment.amt}"></td>
+        <td th:text="${payment.startDate}"></td>
+        <td th:text="${payment.endDate}"></td>
+        <td th:text="${payment.frequency.name}"></td>
+        <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
+        <td>Remove</td>
+    </tr>
+
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td><a href="/payments/add">Add a Payment</a></td>
+    </tr>
+</table>
+
+</body>
+</html>

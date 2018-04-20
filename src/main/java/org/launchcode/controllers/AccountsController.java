@@ -40,6 +40,8 @@ public class AccountsController {
             return "accounts/add";
         }
 
+        accountDao.save(newAccount);
+
         return "redirect:/home";
     }
 }

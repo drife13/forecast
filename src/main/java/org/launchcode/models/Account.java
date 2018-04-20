@@ -47,11 +47,11 @@ public class Account {
         this.name = name;
     }
 
-    public BigDecimal getInitialBalance() {
+    public BigDecimal getInitialAmt() {
         return initialAmt;
     }
 
-    public void setInitialBalance(BigDecimal initialBalance) {
+    public void setInitialAmt(BigDecimal initialBalance) {
         this.initialAmt = initialBalance;
     }
 

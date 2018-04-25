@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container body-content">
+<h1 th:text="${title}">Default Title</h1>
+
+<nav th:replace="fragments :: navigation"></nav>
+
+<form method="post" style="max-width:600px;" th:object="${form}">
+
+    <div class="form-group">
+        <label th:for="name">Name</label>
+        <input class="form-control" th:field="*{name}"/>
+        <span th:errors="*{name}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="amt">Amount (+/-)</label>
+        <input class="form-control" th:field="*{amt}" />
+        <span th:errors="*{amt}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="accountId">Account</label>
+        <select name="accountId">
+            <option th:each="account : *{accounts}"
+                    th:text="${account.name}"
+                    th:value="${account.id}"></option>
+        </select>
+        <span th:errors="*{accountId}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="startDate">Start Date</label>
+        <input class="form-control" th:field="*{startDate}"/>
+        <span th:errors="*{startDate}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="endDate">Start Date</label>
+        <input class="form-control" th:field="*{endDate}"/>
+        <span th:errors="*{endDate}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="frequency">Frequency</label>
+        <select name="frequency">
+            <option th:each="frequency : ${frequencies}"
+                    th:text="${frequency.name}"
+                    th:value="${frequency}"></option>
+        </select>
+        <span th:errors="*{frequency}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Add Recurring Payment" />
+</form>
+
+</body>
+</html>

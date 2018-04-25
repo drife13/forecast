@@ -28,8 +28,9 @@
 <br />
 <table class="table">
     <tr>
-        <th>Payment Description</th>
+        <th>Name</th>
         <th>Amount</th>
+        <th>Account</th>
         <th>Start Date</th>
         <th>End Date</th>
         <th>Frequency</th>
@@ -40,6 +41,7 @@
     <tr th:each="payment : ${paymentTypes}">
         <td th:text="${payment.name}"></td>
         <td th:text="${payment.amt}"></td>
+        <td th:text="${payment.account.name}"></td>
         <td th:text="${payment.startDate}"></td>
         <td th:text="${payment.endDate}"></td>
         <td th:text="${payment.frequency.name}"></td>

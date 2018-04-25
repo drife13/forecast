@@ -1,5 +1,7 @@
 package org.launchcode.models;
 
+import org.launchcode.models.forms.AddPaymentTypeForm;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -38,12 +40,13 @@ public class PaymentType {
 
     public PaymentType() {}
 
-    public PaymentType(String name, BigDecimal amt, LocalDate startDate, LocalDate endDate, Frequency frequency) {
-        this.name = name;
-        this.amt = amt;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.frequency = frequency;
+    public PaymentType(AddPaymentTypeForm form, Account account) {
+        this.name = form.getName();
+        this.amt = form.getAmt();
+        this.startDate = form.getStartDate();
+        this.endDate = form.getEndDate();
+        this.frequency = form.getFrequency();
+        this.account = account;
     }
 
     private void checkEndDate() {

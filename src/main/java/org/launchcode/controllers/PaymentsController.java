@@ -35,12 +35,10 @@ public class PaymentsController {
     public String displayAddPaymentTypeForm(Model model) {
 
         Iterable<Account> accounts = accountDao.findAll();
-
-        AddPaymentTypeForm form = new AddPaymentTypeForm(accounts);
-
         model.addAttribute("title", "Add Recurring Payment");
-        model.addAttribute("form", form);
+        model.addAttribute("form", new AddPaymentTypeForm());
         model.addAttribute("frequencies", Frequency.values());
+        model.addAttribute("accounts", accounts);
 
         return "payments/add";
     }
@@ -49,7 +47,12 @@ public class PaymentsController {
     public String processAddPaymentTypeForm(Model model, @ModelAttribute @Valid AddPaymentTypeForm form, Errors errors) {
 
         if (errors.hasErrors()) {
+            Iterable<Account> accounts = accountDao.findAll();
+            model.addAttribute("title", "Add Recurring Payment");
             model.addAttribute("form", form);
+            model.addAttribute("frequencies", Frequency.values());
+            model.addAttribute("accounts", accounts);
+
             return "payments/add";
         }
 

@@ -140,7 +140,7 @@ public class PaymentType {
         this.amt = amt;
     }
 
-    public LocalDate getStartDateDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
@@ -149,7 +149,7 @@ public class PaymentType {
         checkEndDate();
     }
 
-    public LocalDate getEndDateDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

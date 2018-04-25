@@ -42,8 +42,8 @@
         <td th:text="${payment.name}"></td>
         <td th:text="${payment.amt}"></td>
         <td th:text="${payment.account.name}"></td>
-        <td th:text="${payment.startDate}"></td>
-        <td th:text="${payment.endDate}"></td>
+        <td th:text="${payment.startDate.toString()}"></td>
+        <td th:text="${payment.endDate.toString()}"></td>
         <td th:text="${payment.frequency.name}"></td>
         <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
         <td>Remove</td>

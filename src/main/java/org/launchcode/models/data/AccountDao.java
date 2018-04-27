@@ -9,4 +9,6 @@ import javax.transaction.Transactional;
 @Repository
 @Transactional
 public interface AccountDao extends CrudRepository<Account, Integer> {
+
+
 }

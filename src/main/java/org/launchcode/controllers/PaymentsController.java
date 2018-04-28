@@ -96,4 +96,11 @@ public class PaymentsController {
 
         return "redirect:/home";
     }
+
+    @RequestMapping(value = "remove/{paymentTypeId}", method = RequestMethod.POST)
+    public String removeAccount(@PathVariable int paymentTypeId){
+        paymentTypeDao.delete(paymentTypeId);
+
+        return "redirect:/home";
+    }
 }

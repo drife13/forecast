@@ -78,4 +78,11 @@ public class AccountsController {
 
         return "redirect:/home";
     }
+
+    @RequestMapping(value = "remove/{accountId}", method = RequestMethod.POST)
+    public String removeAccount(@PathVariable int accountId){
+        accountDao.delete(accountId);
+
+        return "redirect:/home";
+    }
 }

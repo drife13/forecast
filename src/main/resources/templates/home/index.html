@@ -11,19 +11,25 @@
         <tr>
             <th>Account Name</th>
             <th>Starting Balance</th>
-            <th>Edit</th>
-            <th>Remove</th>
+            <th></th>
+            <th></th>
         </tr>
 
         <tr th:each="account : ${accounts}">
             <td th:text="${account.name}"></td>
             <td th:text="${account.initialAmt}"></td>
             <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
-            <td>Remove</td>
+            <td>
+                <form method="post" th:action="@{'/accounts/remove/' + ${account.id}}">
+                    <input type="submit" value="Remove" />
+                </form>
+            </td>
         </tr>
+
+        <tr><td><a href="/accounts/add">Add an Account</a></td></tr>
     </table>
-    <a href="/accounts/add">Add an Account</a>
 </div>
+
 <br />
 <div>
     <table class="table">
@@ -34,8 +40,8 @@
             <th>Start Date</th>
             <th>End Date</th>
             <th>Frequency</th>
-            <th>Edit</th>
-            <th>Remove</th>
+            <th></th>
+            <th></th>
         </tr>
 
         <tr th:each="payment : ${paymentTypes}">
@@ -46,10 +52,15 @@
             <td th:text="${payment.endDate.toString()}"></td>
             <td th:text="${payment.frequency.name}"></td>
             <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
-            <td>Remove</td>
+            <td>
+                <form method="post" th:action="@{'/payments/remove/' + ${payment.id}}">
+                    <input type="submit" value="Remove" />
+                </form>
+            </td>
         </tr>
+
+        <tr><td><a href="/payments/add">Add a Payment</a></td></tr>
     </table>
-    <a href="/payments/add">Add a Payment</a>
 </div>
 
 </body>

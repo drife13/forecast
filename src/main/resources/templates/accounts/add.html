@@ -8,16 +8,18 @@
 
 <form method="post" style="max-width:600px;" th:object="${account}">
 
-    <div class="form-group">
-        <label th:for="name">Name</label>
-        <input class="form-control" th:field="*{name}"/>
-        <span th:errors="*{name}" class="error"></span>
-    </div>
+    <div th:fragment="formFields">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}"/>
+            <span th:errors="*{name}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="initialAmt">Initial Balance</label>
-        <input class="form-control" th:field="*{initialAmt}" />
-        <span th:errors="*{initialAmt}" class="error"></span>
+        <div class="form-group">
+            <label th:for="initialAmt">Initial Balance</label>
+            <input class="form-control" th:field="*{initialAmt}" />
+            <span th:errors="*{initialAmt}" class="error"></span>
+        </div>
     </div>
 
     <input type="submit" value="Add Account" />

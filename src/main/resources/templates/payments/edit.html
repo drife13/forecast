@@ -6,12 +6,12 @@
 
 <nav th:replace="fragments :: navigation"></nav>
 
-<form method="post" action="/accounts/edit" style="max-width:600px;" th:object="${form}">
+<form method="post" action="/payments/edit" style="max-width:600px;" th:object="${form}">
 
-    <div th:replace="accounts/add :: formFields"></div>
+    <div th:replace="payments/add :: formFields"></div>
 
     <div class="form-group">
-        <input type="hidden" name="accountId" id="accountId" th:value="*{accountId}" />
+        <input type="hidden" name="paymentTypeId" id="paymentTypeId" th:value="*{paymentTypeId}" />
     </div>
 
     <input type="submit" value="Save Changes" />

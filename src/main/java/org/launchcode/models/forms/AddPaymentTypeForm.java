@@ -34,8 +34,10 @@ public class AddPaymentTypeForm {
     public AddPaymentTypeForm() {}
 
     private void checkEndDate() {
-        if (this.endDate.isBefore(this.startDate)) {
-            this.endDate = null;
+        if (startDate != null && endDate != null) {
+            if (this.endDate.isBefore(this.startDate)) {
+                this.endDate = null;
+            }
         }
     }
 
@@ -69,7 +71,7 @@ public class AddPaymentTypeForm {
 
     public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
-        //checkEndDate();
+        checkEndDate();
     }
 
     public LocalDate getEndDate() {
@@ -78,7 +80,7 @@ public class AddPaymentTypeForm {
 
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
-        //checkEndDate();
+        checkEndDate();
     }
 
     public Frequency getFrequency() {

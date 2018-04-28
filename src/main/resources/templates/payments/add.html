@@ -8,50 +8,52 @@
 
 <form method="post" style="max-width:600px;" th:object="${form}">
 
-    <div class="form-group">
-        <label th:for="name">Name</label>
-        <input class="form-control" th:field="*{name}"/>
-        <span th:errors="*{name}" class="error"></span>
-    </div>
+    <div th:fragment="formFields">
+        <div class="form-group">
+            <label th:for="name">Name</label>
+            <input class="form-control" th:field="*{name}"/>
+            <span th:errors="*{name}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="amt">Amount (+/-)</label>
-        <input class="form-control" th:field="*{amt}" />
-        <span th:errors="*{amt}" class="error"></span>
-    </div>
+        <div class="form-group">
+            <label th:for="amt">Amount</label>
+            <input class="form-control" th:field="*{amt}" />
+            <span th:errors="*{amt}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="accountId">Account</label>
-        <select name="accountId">
-            <option th:each="account : ${accounts}"
-                    th:text="${account.name}"
-                    th:value="${account.id}"
-                    th:selected="(${account.id} == *{accountId})"></option>
-        </select>
-        <span th:errors="*{accountId}" class="error"></span>
-    </div>
+        <div class="form-group">
+            <label th:for="accountId">Account</label>
+            <select name="accountId">
+                <option th:each="account : ${accounts}"
+                        th:text="${account.name}"
+                        th:value="${account.id}"
+                        th:selected="(${account.id} == *{accountId})"></option>
+            </select>
+            <span th:errors="*{accountId}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="startDate">Start Date</label>
-        <input class="form-control" type="date" th:value="*{startDate}" th:field="*{startDate}"/>
-        <span th:errors="*{startDate}" class="error"></span>
-    </div>
+        <div class="form-group">
+            <label th:for="startDate">Start Date</label>
+            <input class="form-control" type="date" th:value="*{startDate}" th:field="*{startDate}"/>
+            <span th:errors="*{startDate}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="endDate">End Date</label>
-        <input class="form-control" type="date" th:value="*{endDate}" th:field="*{endDate}"/>
-        <span th:errors="*{endDate}" class="error"></span>
-    </div>
+        <div class="form-group">
+            <label th:for="endDate">End Date</label>
+            <input class="form-control" type="date" th:value="*{endDate}" th:field="*{endDate}"/>
+            <span th:errors="*{endDate}" class="error"></span>
+        </div>
 
-    <div class="form-group">
-        <label th:for="frequency">Frequency</label>
-        <select name="frequency">
-            <option th:each="frequency : ${frequencies}"
-                    th:text="${frequency.name}"
-                    th:value="${frequency}"
-                    th:selected="(${frequency} == *{frequency})"></option>
-        </select>
-        <span th:errors="*{frequency}" class="error"></span>
+        <div class="form-group">
+            <label th:for="frequency">Frequency</label>
+            <select name="frequency">
+                <option th:each="frequency : ${frequencies}"
+                        th:text="${frequency.name}"
+                        th:value="${frequency}"
+                        th:selected="(${frequency} == *{frequency})"></option>
+            </select>
+            <span th:errors="*{frequency}" class="error"></span>
+        </div>
     </div>
 
     <input type="submit" value="Add Recurring Payment" />

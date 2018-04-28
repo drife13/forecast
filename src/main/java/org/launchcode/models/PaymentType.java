@@ -40,7 +40,7 @@ public class PaymentType {
 
     public PaymentType() {}
 
-    public PaymentType(AddPaymentTypeForm form, Account account) {
+    public void ProcessForm(AddPaymentTypeForm form, Account account) {
         this.name = form.getName();
         this.amt = form.getAmt();
         this.startDate = form.getStartDate();
@@ -50,8 +50,10 @@ public class PaymentType {
     }
 
     private void checkEndDate() {
-        if (this.endDate.isBefore(this.startDate)) {
-            this.endDate = null;
+        if (startDate != null && endDate != null) {
+            if (this.endDate.isBefore(this.startDate)) {
+                this.endDate = null;
+            }
         }
     }
 

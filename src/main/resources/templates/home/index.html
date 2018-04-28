@@ -6,53 +6,51 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <br/>
-<table class="table">
-    <tr>
-        <th>Account Name</th>
-        <th>Starting Balance</th>
-        <th>Edit</th>
-        <th>Remove</th>
-    </tr>
+<div>
+    <table class="table">
+        <tr>
+            <th>Account Name</th>
+            <th>Starting Balance</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
 
-    <tr th:each="account : ${accounts}">
-        <td th:text="${account.name}"></td>
-        <td th:text="${account.initialAmt}"></td>
-        <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
-        <td>Remove</td>
-    </tr>
-
-    <tr>
-        <td><a href="/accounts/add">Add an Account</a></td>
-    </tr>
-</table>
+        <tr th:each="account : ${accounts}">
+            <td th:text="${account.name}"></td>
+            <td th:text="${account.initialAmt}"></td>
+            <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
+            <td>Remove</td>
+        </tr>
+    </table>
+    <a href="/accounts/add">Add an Account</a>
+</div>
 <br />
-<table class="table">
-    <tr>
-        <th>Name</th>
-        <th>Amount</th>
-        <th>Account</th>
-        <th>Start Date</th>
-        <th>End Date</th>
-        <th>Frequency</th>
-        <th>Edit</th>
-        <th>Remove</th>
-    </tr>
+<div>
+    <table class="table">
+        <tr>
+            <th>Name</th>
+            <th>Amount</th>
+            <th>Account</th>
+            <th>Start Date</th>
+            <th>End Date</th>
+            <th>Frequency</th>
+            <th>Edit</th>
+            <th>Remove</th>
+        </tr>
 
-    <tr th:each="payment : ${paymentTypes}">
-        <td th:text="${payment.name}"></td>
-        <td th:text="${payment.amt}"></td>
-        <td th:text="${payment.account.name}"></td>
-        <td th:text="${payment.startDate.toString()}"></td>
-        <td th:text="${payment.endDate.toString()}"></td>
-        <td th:text="${payment.frequency.name}"></td>
-        <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
-        <td>Remove</td>
-    </tr>
-
-    <tr>
-        <td><a href="/payments/add">Add a Payment</a></td>
-    </tr>
-</table>
+        <tr th:each="payment : ${paymentTypes}">
+            <td th:text="${payment.name}"></td>
+            <td th:text="${payment.amt}"></td>
+            <td th:text="${payment.account.name}"></td>
+            <td th:text="${payment.startDate.toString()}"></td>
+            <td th:text="${payment.endDate.toString()}"></td>
+            <td th:text="${payment.frequency.name}"></td>
+            <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
+            <td>Remove</td>
+        </tr>
+    </table>
+    <a href="/payments/add">Add a Payment</a>
+</div>
 
 </body>
 </html>

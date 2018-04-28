@@ -51,9 +51,9 @@ public class AccountsController {
     public String displayEditForm(Model model, @PathVariable int accountId){
         Account theAccount = accountDao.findOne(accountId);
 
-        model.addAttribute("account", theAccount);
-        model.addAttribute("title", "Edit Account "
-                            + theAccount.getName() + " (ID=" + accountId +")");
+        model.addAttribute("form", new EditAccountForm(theAccount));
+        model.addAttribute("title", "Edit "
+                            + theAccount.getName() + " Account (ID=" + accountId +")");
 
         return "accounts/edit";
     }
@@ -65,7 +65,8 @@ public class AccountsController {
 
         if (errors.hasErrors()) {
             model.addAttribute("form", form);
-            model.addAttribute("title", "Edit Cheese " + theAccount.getName() + " (ID=" + form.getAccountId() +")");
+            model.addAttribute("title", "Edit"
+                            + theAccount.getName() + " Account (ID=" + form.getAccountId() +")");
 
             return "accounts/edit";
         }

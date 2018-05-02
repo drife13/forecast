@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head th:replace="fragments :: head"></head>
+<body class="container body-content">
+<h1 th:text="${title}">Default Title</h1>
+<nav th:replace="fragments :: navigation"></nav>
+
+<br/>
+<table class="table">
+    <tr th:each="header : ${headers}">
+        <th th:text="${header}"></th>
+    </tr>
+
+    <tr th:each="row : ${table}">
+        <td th:text="${row.getKey().toString()}"></td>
+        <td th:each="balance : ${row.getValue()}"
+            th:text="balance"></td>
+    </tr>
+</table>
+
+</body>
+</html>

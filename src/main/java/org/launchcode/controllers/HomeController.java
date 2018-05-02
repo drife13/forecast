@@ -1,5 +1,6 @@
 package org.launchcode.controllers;
 
+import org.launchcode.models.Prediction;
 import org.launchcode.models.data.AccountDao;
 import org.launchcode.models.data.PaymentTypeDao;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +23,7 @@ public class HomeController {
         model.addAttribute("title", "foreca$t");
         model.addAttribute("accounts", accountDao.findAll());
         model.addAttribute("paymentTypes", paymentTypeDao.findAll());
+        model.addAttribute("prediction", new Prediction());
 
         return "home/index";
     }

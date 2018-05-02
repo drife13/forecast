@@ -1,5 +1,6 @@
 package org.launchcode.models;
 
+import org.launchcode.models.data.PaymentDao;
 import org.launchcode.models.forms.AddPaymentTypeForm;
 
 import javax.persistence.*;
@@ -57,13 +58,15 @@ public class PaymentType {
         }
     }
 
-    private void setPayments(LocalDate simStartDate, LocalDate simEndDate) {
-        if (simStartDate.isBefore(this.startDate)) simStartDate = this.startDate;
-        if (simEndDate.isAfter(this.endDate)) simEndDate = this.endDate;
-        if (simEndDate.isBefore(simStartDate)) simEndDate = simStartDate;
+    public void generatePayments(LocalDate simStartDate, LocalDate simEndDate, PaymentDao paymentDao) {
+        LocalDate actualStartDate = simStartDate;
+        LocalDate actualEndDate = simEndDate;
 
-        this.payments = new ArrayList<>();
-        List<LocalDate> dates = generateDateList(simStartDate, simEndDate, this.frequency);
+        if (simStartDate.isBefore(this.startDate)) actualStartDate = this.startDate;
+        if (simEndDate.isAfter(this.endDate)) actualEndDate = this.endDate;
+        if (actualEndDate.isBefore(actualStartDate)) actualEndDate = actualStartDate;
+
+        List<LocalDate> dates = generateDateList(actualStartDate, actualEndDate);
         for (LocalDate date : dates)
         {
             Payment payment = new Payment();
@@ -72,11 +75,11 @@ public class PaymentType {
             payment.setAmt(this.amt);
             payment.setDate(date);
 
-            this.payments.add(payment);
+            paymentDao.save(payment);
         }
     }
 
-    private List<LocalDate> generateDateList(LocalDate start, LocalDate end, Frequency frequency) {
+    private List<LocalDate> generateDateList(LocalDate start, LocalDate end) {
         List<LocalDate> dates = new ArrayList<>();
 
         int i = 0;
@@ -84,7 +87,7 @@ public class PaymentType {
         while (current.isBefore(end) || current.isEqual(end)) {
             dates.add(current);
 
-            switch (frequency) {
+            switch (this.frequency) {
                 case SINGLE:
                 case DAILY:
                     current = start.plusDays(++i);

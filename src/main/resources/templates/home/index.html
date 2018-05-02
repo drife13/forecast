@@ -6,62 +6,76 @@
 <nav th:replace="fragments :: navigation"></nav>
 
 <br/>
-<div>
-    <table class="table">
-        <tr>
-            <th>Account Name</th>
-            <th>Starting Balance</th>
-            <th></th>
-            <th></th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>Account Name</th>
+        <th>Starting Balance</th>
+        <th></th>
+        <th></th>
+    </tr>
 
-        <tr th:each="account : ${accounts}">
-            <td th:text="${account.name}"></td>
-            <td th:text="${account.initialAmt}"></td>
-            <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
-            <td>
-                <form method="post" th:action="@{'/accounts/remove/' + ${account.id}}">
-                    <input type="submit" value="Remove" />
-                </form>
-            </td>
-        </tr>
+    <tr th:each="account : ${accounts}">
+        <td th:text="${account.name}"></td>
+        <td th:text="${account.initialAmt}"></td>
+        <td><a th:href="@{'/accounts/edit/' + ${account.id}}">Edit</a></td>
+        <td>
+            <form method="post" th:action="@{'/accounts/remove/' + ${account.id}}">
+                <input type="submit" value="Remove" />
+            </form>
+        </td>
+    </tr>
 
-        <tr><td><a href="/accounts/add">Add an Account</a></td></tr>
-    </table>
-</div>
+    <tr><td><a href="/accounts/add">Add an Account</a></td></tr>
+</table>
 
 <br />
-<div>
-    <table class="table">
-        <tr>
-            <th>Name</th>
-            <th>Amount</th>
-            <th>Account</th>
-            <th>Start Date</th>
-            <th>End Date</th>
-            <th>Frequency</th>
-            <th></th>
-            <th></th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Account</th>
+        <th>Start Date</th>
+        <th>End Date</th>
+        <th>Frequency</th>
+        <th></th>
+        <th></th>
+    </tr>
 
-        <tr th:each="payment : ${paymentTypes}">
-            <td th:text="${payment.name}"></td>
-            <td th:text="${payment.amt}"></td>
-            <td th:text="${payment.account.name}"></td>
-            <td th:text="${payment.startDate.toString()}"></td>
-            <td th:text="${payment.endDate.toString()}"></td>
-            <td th:text="${payment.frequency.name}"></td>
-            <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
-            <td>
-                <form method="post" th:action="@{'/payments/remove/' + ${payment.id}}">
-                    <input type="submit" value="Remove" />
-                </form>
-            </td>
-        </tr>
+    <tr th:each="payment : ${paymentTypes}">
+        <td th:text="${payment.name}"></td>
+        <td th:text="${payment.amt}"></td>
+        <td th:text="${payment.account.name}"></td>
+        <td th:text="${payment.startDate.toString()}"></td>
+        <td th:text="${payment.endDate.toString()}"></td>
+        <td th:text="${payment.frequency.name}"></td>
+        <td><a th:href="@{'/payments/edit/' + ${payment.id}}">Edit</a></td>
+        <td>
+            <form method="post" th:action="@{'/payments/remove/' + ${payment.id}}">
+                <input type="submit" value="Remove" />
+            </form>
+        </td>
+    </tr>
 
-        <tr><td><a href="/payments/add">Add a Payment</a></td></tr>
-    </table>
-</div>
+    <tr><td><a href="/payments/add">Add a Payment</a></td></tr>
+</table>
+
+<form method="post" action="/prediction" style="max-width:600px;" th:object="${prediction}">
+
+    <div class="form-group">
+        <label th:for="startDate">Start Date</label>
+        <input class="form-control" type="date" th:value="*{startDate}" th:field="*{startDate}"/>
+        <span th:errors="*{startDate}" class="error"></span>
+    </div>
+
+    <div class="form-group">
+        <label th:for="endDate">End Date</label>
+        <input class="form-control" type="date" th:value="*{endDate}" th:field="*{endDate}"/>
+        <span th:errors="*{endDate}" class="error"></span>
+    </div>
+
+    <input type="submit" value="Predict Balances" />
+
+</form>
 
 </body>
 </html>

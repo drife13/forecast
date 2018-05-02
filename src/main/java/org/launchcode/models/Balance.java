@@ -1,5 +1,7 @@
 package org.launchcode.models;
 
+import org.launchcode.models.data.PaymentDao;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -28,14 +30,18 @@ public class Balance {
 
     public Balance() {}
 
-    public Balance(Balance prevBalance, List<Payment> payments) {
+    public Balance(Balance prevBalance) {
         this.prevBalance = prevBalance;
         this.account = prevBalance.getAccount();
-        this.date = prevBalance.date.plusDays(1);
-        this.payments = payments;
+        this.date = prevBalance.getDate().plusDays(1);
+        this.amt = prevBalance.getAmt();
+    }
 
+    public void pointPaymentsToThisBalance(List<Payment> payments, PaymentDao paymentDao) {
         for (Payment payment : payments) {
             this.amt.add(payment.getAmt());
+            payment.setBalance(this);
+            paymentDao.save(payment);
         }
     }
 

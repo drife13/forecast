@@ -1,9 +1,7 @@
 package org.launchcode.controllers;
 
-import org.apache.tomcat.jni.Local;
 import org.launchcode.models.*;
 import org.launchcode.models.data.*;
-import org.launchcode.models.forms.EditAccountForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,9 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.validation.Valid;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Controller
 @RequestMapping("prediction")
@@ -87,19 +83,23 @@ public class PredictionController {
             dates.add(simDate);
             simDate = simDate.plusDays(1);
         }
+        int numDates = dates.size();
 
         int numAccounts = (int) accountDao.count();
-        HashMap<LocalDate, BigDecimal[]> balanceTable = new HashMap<>();
+        Iterable<Account> accounts = accountDao.findAll();
 
-        for (LocalDate date : dates) {
-            BigDecimal[] balanceRow = new BigDecimal[numAccounts + 1];
+        LinkedHashMap<LocalDate, double[]> balanceTable = new LinkedHashMap<>();
+        for (int i=0; i<numDates; i++) {
+            LocalDate date = dates.get(i);
+            double[] balanceRow = new double[numAccounts + 1];
+            Arrays.fill(balanceRow, 0);
 
             int j = 0;
-            for (Account account : accountDao.findAll()) {
-                List<Balance> balance = balanceDao.findByAccountAndDate(account, date);
-                balanceRow[j] = balance.get(0).getAmt();
-                balanceRow[numAccounts] = balanceRow[numAccounts].add(balanceRow[j]);
-                j++;
+            for (Account account : accounts) {
+                List<Balance> balances = account.getBalances();
+                BigDecimal balanceAmt = balances.get(i).getAmt();
+                balanceRow[j++] = balanceAmt.doubleValue();
+                balanceRow[numAccounts] += balanceAmt.doubleValue();
             }
 
             balanceTable.put(date, balanceRow);
@@ -108,7 +108,7 @@ public class PredictionController {
         String[] tableHeaders = new String[1 + numAccounts + 1];
         tableHeaders[0] = "Date";
         int i = 1;
-        for (Account account : accountDao.findAll()) {
+        for (Account account : accounts) {
             tableHeaders[i++] = account.getName();
         }
         tableHeaders[i] = "Net Total";
@@ -118,9 +118,9 @@ public class PredictionController {
         model.addAttribute("headers", tableHeaders);
         model.addAttribute("table", balanceTable.entrySet());
 
-        prediction.setTableHeaders(tableHeaders);
-        prediction.setBalanceTable(balanceTable);
-        predictionDao.save(prediction);
+        //prediction.setTableHeaders(tableHeaders);
+        //prediction.setBalanceTable(balanceTable);
+        //predictionDao.save(prediction);
 
         return "prediction/view";
     }

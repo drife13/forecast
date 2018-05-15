@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.List;
 
 @Entity
 public class Prediction {
@@ -27,7 +28,7 @@ public class Prediction {
 
     private String[] tableHeaders;
 
-    private HashMap<LocalDate, BigDecimal[]> balanceTable;
+    private HashMap<LocalDate, double[]> balanceTable;
 
     public Prediction() {}
 
@@ -69,11 +70,11 @@ public class Prediction {
         this.tableHeaders = tableHeaders;
     }
 
-    public HashMap<LocalDate, BigDecimal[]> getBalanceTable() {
+    public HashMap<LocalDate, double[]> getBalanceTable() {
         return balanceTable;
     }
 
-    public void setBalanceTable(HashMap<LocalDate, BigDecimal[]> balanceTable) {
+    public void setBalanceTable(HashMap<LocalDate, double[]> balanceTable) {
         this.balanceTable = balanceTable;
     }
 }

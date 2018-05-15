@@ -7,14 +7,14 @@
 
 <br/>
 <table class="table">
-    <tr th:each="header : ${headers}">
-        <th th:text="${header}"></th>
+    <tr>
+        <th th:each="header : ${headers}" th:text="${header}"></th>
     </tr>
 
     <tr th:each="row : ${table}">
         <td th:text="${row.getKey().toString()}"></td>
         <td th:each="balance : ${row.getValue()}"
-            th:text="balance"></td>
+            th:text="${balance}"></td>
     </tr>
 </table>
 

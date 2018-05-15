@@ -39,7 +39,7 @@ public class Balance {
 
     public void pointPaymentsToThisBalance(List<Payment> payments, PaymentDao paymentDao) {
         for (Payment payment : payments) {
-            this.amt.add(payment.getAmt());
+            this.amt = this.amt.add(payment.getAmt());
             payment.setBalance(this);
             paymentDao.save(payment);
         }

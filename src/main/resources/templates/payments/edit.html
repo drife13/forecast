@@ -19,7 +19,7 @@
 </form>
 
 <div th:object="${form}">
-    <form method="post" th:action="@{'/payments/remove/' + *{paymentId}}">
+    <form method="post" th:action="@{'/payments/remove/' + *{paymentTypeId}}">
         <input type="submit" value="Remove Payment" />
     </form>
 </div>

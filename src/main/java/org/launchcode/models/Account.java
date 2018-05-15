@@ -1,10 +1,13 @@
 package org.launchcode.models;
 
+import org.thymeleaf.expression.Lists;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Entity
@@ -55,9 +58,7 @@ public class Account {
         this.initialAmt = initialBalance;
     }
 
-    public List<Balance> getBalances() {
-        return balances;
-    }
+    public List<Balance> getBalances() { return balances; }
 
     public List<Payment> getPayments() {
         return payments;

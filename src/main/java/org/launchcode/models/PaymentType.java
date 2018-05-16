@@ -42,12 +42,16 @@ public class PaymentType {
     public PaymentType() {}
 
     public void ProcessForm(AddPaymentTypeForm form, Account account) {
-        this.name = form.getName();
-        this.amt = form.getAmt();
-        this.startDate = form.getStartDate();
-        this.endDate = form.getEndDate();
-        this.frequency = form.getFrequency();
-        this.account = account;
+        setName(form.getName());
+        setAmt(form.getAmt());
+        setStartDate(form.getStartDate());
+        setEndDate(form.getEndDate());
+        setFrequency(form.getFrequency());
+        setAccount(account);
+
+        if (this.frequency.equals(Frequency.SINGLE)) {
+            setEndDate(form.getStartDate());
+        }
     }
 
     private void checkEndDate() {
@@ -59,12 +63,14 @@ public class PaymentType {
     }
 
     public void generatePayments(LocalDate simStartDate, LocalDate simEndDate, PaymentDao paymentDao) {
-        LocalDate actualStartDate = simStartDate;
-        LocalDate actualEndDate = simEndDate;
+        LocalDate actualStartDate = this.startDate;
+        int i = 0;
+        while (actualStartDate.isBefore(simStartDate)) {
+            actualStartDate = plusFreq(this.startDate, ++i);
+        }
 
-        if (simStartDate.isBefore(this.startDate)) actualStartDate = this.startDate;
-        if (simEndDate.isAfter(this.endDate)) actualEndDate = this.endDate;
-        if (actualEndDate.isBefore(actualStartDate)) actualEndDate = actualStartDate;
+        LocalDate actualEndDate = this.endDate;
+        if (actualEndDate.isAfter(simEndDate)) actualEndDate = simEndDate;
 
         List<LocalDate> dates = generateDateList(actualStartDate, actualEndDate);
         for (LocalDate date : dates)
@@ -82,35 +88,31 @@ public class PaymentType {
     private List<LocalDate> generateDateList(LocalDate start, LocalDate end) {
         List<LocalDate> dates = new ArrayList<>();
 
-        int i = 0;
         LocalDate current = start;
+        int i = 0;
         while (current.isBefore(end) || current.isEqual(end)) {
             dates.add(current);
-
-            switch (this.frequency) {
-                case SINGLE:
-                case DAILY:
-                    current = start.plusDays(++i);
-                    break;
-
-                case WEEKLY:
-                    current = start.plusWeeks(++i);
-                    break;
-
-                case BIWEEKLY:
-                    current = start.plusWeeks(2*++i);
-                    break;
-
-                case MONTHLY:
-                    current = start.plusMonths(++i);
-                    break;
-
-                case ANNUALLY:
-                    current = start.plusYears(++i);
-                    break;
-            }
+            current = plusFreq(start, ++i);
         }
         return dates;
+    }
+
+    private LocalDate plusFreq(LocalDate date, int i) {
+        switch (this.frequency) {
+            case SINGLE:
+            case DAILY:
+                return date.plusDays(i);
+            case WEEKLY:
+                return date.plusWeeks(i);
+            case BIWEEKLY:
+                return date.plusWeeks(2 * i);
+            case MONTHLY:
+                return date.plusMonths(i);
+            case ANNUALLY:
+                return date.plusYears(i);
+            default:
+                return date;
+        }
     }
 
     public int getId() {
@@ -149,8 +151,8 @@ public class PaymentType {
         return startDate;
     }
 
-    public void setStartDate(LocalDate initialDate) {
-        this.startDate = initialDate;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
         checkEndDate();
     }
 
